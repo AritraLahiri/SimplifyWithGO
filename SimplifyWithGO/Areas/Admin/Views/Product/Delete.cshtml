@@ -1,0 +1,64 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Product
+
+<div class="container">
+	<div class="my-5">
+		<h1>Delete Product</h1>
+		<br />
+	</div>
+	<form method="post">
+		<div class="container">
+			<div asp-validation-summary="All"></div>
+		</div>
+		<div class="form-group">
+			<label class="p-0 my-2" asp-for="Name"></label>
+			<input readonly asp-for="Name" class="form-control" />
+			<span asp-validation-for="Name" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label class="p-0 my-2" asp-for="Description"></label>
+			<input readonly asp-for="Description" class="form-control" />
+			<span asp-validation-for="Description" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label class="p-0 my-2" asp-for="ImageUrl"></label>
+			<input readonly asp-for="ImageUrl" class="form-control" />
+			<span asp-validation-for="ImageUrl" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label class="p-0 my-2" asp-for="ListPrice"></label>
+			<input readonly asp-for="ListPrice" type="number" class="form-control" />
+			<span asp-validation-for="ListPrice" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label class="p-0 my-2" asp-for="Price"></label>
+			<input readonly asp-for="Price" type="number" class="form-control" />
+			<span asp-validation-for="Price" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label class="p-0 my-2" asp-for="PriceFor50"></label>
+			<input readonly asp-for="PriceFor50" type="number" class="form-control" />
+			<span asp-validation-for="PriceFor50" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label class="p-0 my-2" asp-for="PriceFor100"></label>
+			<input readonly asp-for="PriceFor100" type="number" class="form-control" />
+			<span asp-validation-for="PriceFor100" class="text-danger"></span>
+		</div>
+		<div class="row my-5 ">
+			<div class="col-6 col-md-3">
+				<button type="submit" class="btn btn-danger form-control">Delete</button>
+			</div>
+			<div class="col-6 col-md-3">
+				<a asp-controller="Product" asp-action="Index" class="btn btn-light form-control">Back to listing</a>
+			</div>
+		</div>
+	</form>
+</div>
+@section Scripts {
+	<partial name="_ValidationScriptsPartial"></partial>
+}
+
+

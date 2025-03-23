@@ -1,0 +1,69 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model ProductViewModel
+
+<div class="container">
+	<div class="my-5">
+		<h1>Create Product</h1>
+		<br />
+	</div>
+	<form method="post">
+		<div class="container">
+			<div asp-validation-summary="All"></div>
+		</div>
+		<div class="form-group">
+			<label class="p-0 my-2" asp-for="Product.Name"></label>
+			<input asp-for="Product.Name" class="form-control" />
+			<span asp-validation-for="Product.Name" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label class="p-0 my-2" asp-for="Product.Description"></label>
+			<input asp-for="Product.Description" class="form-control" />
+			<span asp-validation-for="Product.Description" class="text-danger"></span>
+		</div>		
+		<div class="form-group">
+			<label class="p-0 my-2" asp-for="Product.ImageUrl"></label>
+			<input asp-for="Product.ImageUrl" class="form-control" />
+			<span asp-validation-for="Product.ImageUrl" class="text-danger"></span>
+		</div>	
+		<div class="form-group">
+			<label class="p-0 my-2" asp-for="Product.ListPrice"></label>
+			<input asp-for="Product.ListPrice" type="number" class="form-control" />
+			<span asp-validation-for="Product.ListPrice" class="text-danger"></span>
+		</div>		
+		<div class="form-group">
+			<label class="p-0 my-2" asp-for="Product.Price"></label>
+			<input asp-for="Product.Price" type="number" class="form-control" />
+			<span asp-validation-for="Product.Price" class="text-danger"></span>
+		</div>		
+		<div class="form-group">
+			<label class="p-0 my-2" asp-for="Product.PriceFor50"></label>
+			<input asp-for="Product.PriceFor50" type="number" class="form-control" />
+			<span asp-validation-for="Product.PriceFor50" class="text-danger"></span>
+		</div>	
+		<div class="form-group">
+			<label class="p-0 my-2" asp-for="Product.PriceFor100"></label>
+			<input asp-for="Product.PriceFor100" type="number" class="form-control" />
+			<span asp-validation-for="Product.PriceFor100" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<br />
+			<select asp-for="Product.CategoryID" asp-items="@Model.CategoryList" class="form-select">
+				<option  disabled selected>---Select Category---</option>
+			</select>
+			<span asp-validation-for="Product.CategoryID" class="text-danger"></span>
+		</div>
+		<div class="row my-5 ">
+			<div class="col-6 col-md-3">
+				<button type="submit" class="btn btn-dark form-control">Create</button>
+			</div>
+			<div class="col-6 col-md-3">
+				<a asp-controller="Product" asp-action="Index" class="btn btn-light form-control">Back to listing</a>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+
