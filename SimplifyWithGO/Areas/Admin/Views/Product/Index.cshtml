@@ -38,7 +38,7 @@
 					<td>@item.Category</td>
 					<td>
 						<div class="container">
-							<a asp-route-Id="@item.Id" class="btn  mx-2 btn-warning" asp-controller="Product" asp-action="Edit">Edit</a>
+							<a asp-route-Id="@item.Id" class="btn  mx-2 btn-warning" asp-controller="Product" asp-action="Upsert">Edit</a>
 							<a asp-route-Id="@item.Id" class="btn mx-2 btn-danger" asp-controller="Product" asp-action="Delete">Delete</a>
 						</div>
 					</td>
@@ -46,7 +46,7 @@
 			}
 		</tbody>
 	</table>
-	<a asp-controller="Product" asp-action="Create" class="btn btn-dark my-5" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Lets create some Category" aria-describedby="tooltip787480"> Create Product</a>
+	<a asp-controller="Product" asp-action="Upsert" class="btn btn-dark my-5" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Lets create some Category" aria-describedby="tooltip787480"> Create Product</a>
 
 </div>
 

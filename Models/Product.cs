@@ -21,7 +21,7 @@ namespace Models
         public double ListPrice { get; set; }
 
         [Display(Name = "Listed Price")]
-        [Range(1, 1000, ErrorMessage = "Price should be between 1-100000")]
+        [Range(1, 100000, ErrorMessage = "Price should be between 1-100000")]
         public double Price { get; set; }
 
         public double PriceFor50 { get; set; }

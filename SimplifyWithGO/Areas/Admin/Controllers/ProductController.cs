@@ -26,7 +26,7 @@ namespace SimplifyWithGO.Areas.Admin.Controllers
             return View(ProductList);
         }
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Upsert(int? Id, IFormFile? ProductImage)
         {
             ProductViewModel ProductVM = new()
             {
@@ -36,51 +36,39 @@ namespace SimplifyWithGO.Areas.Admin.Controllers
                     Value = cat.Id.ToString(),
                     Text = cat.Name.ToString()
                 }),
-                Product = new() { Name = "Product Name" }
+                Product = new() { Name = "" }
             };
-
+            if (Id == null || Id == 0)
+            {
+                return View(ProductVM);
+            }
+            ProductVM.Product = _productRepository.Get(product => product.Id == Id);
             return View(ProductVM);
         }
 
         [HttpPost]
-        public IActionResult Create(Product product)
+        public IActionResult Upsert(Product product)
         {
             if (ModelState.IsValid)
             {
-                _productRepository.Add(product);
-                _productRepository.SaveChanges();
-                TempData["Success"] = "Product Created Successfully";
+                if (product.Id == 0)
+                {
+                    _productRepository.Add(product);
+                    _productRepository.SaveChanges();
+                    TempData["Success"] = "Product  Created Successfully";
+                }
+                else
+                {
+                    _productRepository.Update(product);
+                    _productRepository.SaveChanges();
+                    TempData["Success"] = "Product  Updated Successfully";
+                }
                 return RedirectToAction("Index");
             }
             TempData["Error"] = "Product not valid";
-            return RedirectToAction("Create");
+            return RedirectToAction("Upsert");
         }
-        public IActionResult Edit(int? Id)
-        {
-            if (Id == null || Id == 0)
-            {
-                return NotFound();
-            }
-            Product? product = _productRepository.Get(product => product.Id == Id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return View(product);
-        }
-        [HttpPost]
-        public IActionResult Edit(Product product)
-        {
-            if (ModelState.IsValid)
-            {
-                _productRepository.Update(product);
-                _productRepository.SaveChanges();
-                TempData["Success"] = "Product Updated Successfully";
-                return RedirectToAction("Index");
-            }
-            TempData["Error"] = "Product not valid";
-            return RedirectToAction("Edit");
-        }
+
         [HttpGet]
         public IActionResult Delete(int? Id)
         {
