@@ -12,11 +12,13 @@ namespace SimplifyWithGO.Areas.Admin.Controllers
 
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(ICategoryRepository categoryRepository, IProductRepository productRepository)
+        public ProductController(ICategoryRepository categoryRepository, IProductRepository productRepository, IWebHostEnvironment webHostEnvironment)
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
 
 
@@ -26,7 +28,7 @@ namespace SimplifyWithGO.Areas.Admin.Controllers
             return View(ProductList);
         }
         [HttpGet]
-        public IActionResult Upsert(int? Id, IFormFile? ProductImage)
+        public IActionResult Upsert(int? Id)
         {
             ProductViewModel ProductVM = new()
             {
@@ -47,10 +49,21 @@ namespace SimplifyWithGO.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Upsert(Product product)
+        public IActionResult Upsert(Product product, IFormFile? ProductImage)
         {
             if (ModelState.IsValid)
             {
+                String uploadPath = _webHostEnvironment.WebRootPath + @"\images\Product";
+                if (ProductImage != null)
+                {
+                    String fileName = Guid.NewGuid().ToString() + "_" + ProductImage.FileName;
+                    String filePath = Path.Combine(uploadPath, fileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        ProductImage.CopyTo(fileStream);
+                    }
+                    product.ImageUrl = @"\images\Product\" + fileName;
+                }
                 if (product.Id == 0)
                 {
                     _productRepository.Add(product);

@@ -10,69 +10,100 @@
 	</div>
 	<form method="post" enctype="multipart/form-data" >
 		<input hidden asp-for="Product.Id" />
-		<div class="container">
-			<div asp-validation-summary="All"></div>
-		</div>
-		<div class="form-group">
-			<label class="p-0 my-2" asp-for="Product.Name"></label>
-			<input asp-for="Product.Name" class="form-control" />
-			<span asp-validation-for="Product.Name" class="text-danger"></span>
-		</div>
-		<div class="form-group">
-			<label class="p-0 my-2" asp-for="Product.Description"></label>
-			<input asp-for="Product.Description" class="form-control" />
-			<span asp-validation-for="Product.Description" class="text-danger"></span>
-		</div>		
-		<div class="form-group">
-			<label class="p-0 my-2" asp-for="Product.ImageUrl"></label>
-			<input class="form-control" type="file" />
-		</div>	
-		<div class="form-group">
-			<label class="p-0 my-2" asp-for="Product.ListPrice"></label>
-			<input asp-for="Product.ListPrice" type="number" class="form-control" />
-			<span asp-validation-for="Product.ListPrice" class="text-danger"></span>
-		</div>		
-		<div class="form-group">
-			<label class="p-0 my-2" asp-for="Product.Price"></label>
-			<input asp-for="Product.Price" type="number" class="form-control" />
-			<span asp-validation-for="Product.Price" class="text-danger"></span>
-		</div>		
-		<div class="form-group">
-			<label class="p-0 my-2" asp-for="Product.PriceFor50"></label>
-			<input asp-for="Product.PriceFor50" type="number" class="form-control" />
-			<span asp-validation-for="Product.PriceFor50" class="text-danger"></span>
-		</div>	
-		<div class="form-group">
-			<label class="p-0 my-2" asp-for="Product.PriceFor100"></label>
-			<input asp-for="Product.PriceFor100" type="number" class="form-control" />
-			<span asp-validation-for="Product.PriceFor100" class="text-danger"></span>
-		</div>
-		<div class="form-group">
-			<br />
-			<select asp-for="Product.CategoryID" asp-items="@Model.CategoryList" class="form-select">
-				<option  disabled selected>---Select Category---</option>
-			</select>
-			<span asp-validation-for="Product.CategoryID" class="text-danger"></span>
-		</div>
-		<div class="row my-5 ">
-			<div class="col-6 col-md-3">
-				@{
-					if (Model.Product.Id != 0)
-					{
-						<button type="submit" class="btn btn-dark form-control">Update</button>
-					}
-					else
-					{
-						<button type="submit" class="btn btn-dark form-control">Create</button>
-					}
-				}
+		<div class="row">
+			<div class="col-2">
+				<img src="@Model.Product.ImageUrl" class="img-thumbnail" style="border-radius:15px;width:100%" />
 			</div>
-			<div class="col-6 col-md-3">
-				<a asp-controller="Product" asp-action="Index" class="btn btn-light form-control">Back to listing</a>
+			<div class="col-10">
+				<div class="container">
+					<div asp-validation-summary="All"></div>
+				</div>
+				<div class="form-group">
+					<label class="p-0 my-2 text-primary" text-primary asp-for="Product.Name"></label>
+					<input asp-for="Product.Name" class="form-control" />
+					<span asp-validation-for="Product.Name" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label class="p-0 my-2 text-primary font-weight-bold" asp-for="Product.Description"></label>
+					<textarea asp-for="Product.Description" class="form-control"></textarea>
+				</div>
+				<div class="form-group">
+					<label class="p-0 my-2 text-primary" asp-for="Product.ImageUrl"></label>
+					<input class="form-control" type="file" name="ProductImage" />
+				</div>
+				<div class="form-group">
+					<label class="p-0 my-2 text-primary" asp-for="Product.ListPrice"></label>
+					<input asp-for="Product.ListPrice" type="number" class="form-control" />
+					<span asp-validation-for="Product.ListPrice" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label class="p-0 my-2 text-primary" asp-for="Product.Price"></label>
+					<input asp-for="Product.Price" type="number" class="form-control" />
+					<span asp-validation-for="Product.Price" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label class="p-0 my-2" asp-for="Product.PriceFor50"></label>
+					<input asp-for="Product.PriceFor50" type="number" class="form-control" />
+					<span asp-validation-for="Product.PriceFor50" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label class="p-0 my-2 text-primary" asp-for="Product.PriceFor100"></label>
+					<input asp-for="Product.PriceFor100" type="number" class="form-control" />
+					<span asp-validation-for="Product.PriceFor100" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<br />
+					<select asp-for="Product.CategoryID" asp-items="@Model.CategoryList" class="form-select">
+						<option disabled selected>---Select Category---</option>
+					</select>
+					<span asp-validation-for="Product.CategoryID" class="text-danger"></span>
+				</div>
+				<div class="row my-5 ">
+					<div class="col-6 col-md-3">
+						@{
+							if (Model.Product.Id != 0)
+							{
+								<button type="submit" class="btn btn-dark form-control">Update</button>
+							}
+							else
+							{
+								<button type="submit" class="btn btn-dark form-control">Create</button>
+							}
+						}
+					</div>
+					<div class="col-6 col-md-3">
+						<a asp-controller="Product" asp-action="Index" class="btn btn-light form-control">Back to listing</a>
+					</div>
+				</div>
 			</div>
 		</div>
+
+		
 	</form>
 </div>
 
+@section Scripts{
+	<script>
+		tinymce.init({
+		  selector: 'textarea',
+		  plugins: [
+			// Core editing features
+			'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+			// Your account includes a free trial of TinyMCE premium features
+			// Try the most popular premium features until Apr 7, 2025:
+			'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
+		  ],
+		  toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+		  tinycomments_mode: 'embedded',
+		  tinycomments_author: 'Author name',
+		  mergetags_list: [
+			{ value: 'First.Name', title: 'First Name' },
+			{ value: 'Email', title: 'Email' },
+		  ],
+		  ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+		});
+	</script>
+
+}
 
 
