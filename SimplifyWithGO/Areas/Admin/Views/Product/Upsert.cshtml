@@ -10,9 +10,10 @@
 	</div>
 	<form method="post" enctype="multipart/form-data" >
 		<input hidden asp-for="Product.Id" />
+		<input hidden asp-for="Product.ImageUrl" />
 		<div class="row">
 			<div class="col-2">
-				<img src="@Model.Product.ImageUrl" class="img-thumbnail" style="border-radius:15px;width:100%" />
+				<img asp-for="Product.ImageUrl" src="@Model.Product.ImageUrl" class="img-thumbnail" style="border-radius:15px;width:100%" />
 			</div>
 			<div class="col-10">
 				<div class="container">
@@ -29,7 +30,7 @@
 				</div>
 				<div class="form-group">
 					<label class="p-0 my-2 text-primary" asp-for="Product.ImageUrl"></label>
-					<input class="form-control" type="file" name="ProductImage" />
+					<input class="form-control" type="file" name="ProductImage" asp-for="Product.ImageUrl" />
 				</div>
 				<div class="form-group">
 					<label class="p-0 my-2 text-primary" asp-for="Product.ListPrice"></label>

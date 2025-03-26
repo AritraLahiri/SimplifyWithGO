@@ -24,7 +24,7 @@ namespace SimplifyWithGO.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            List<Product> ProductList = _productRepository.GetAll().ToList();
+            List<Product> ProductList = _productRepository.GetAll(includeTable: "Category").ToList();
             return View(ProductList);
         }
         [HttpGet]
@@ -56,6 +56,15 @@ namespace SimplifyWithGO.Areas.Admin.Controllers
                 String uploadPath = _webHostEnvironment.WebRootPath + @"\images\Product";
                 if (ProductImage != null)
                 {
+                    if (product.ImageUrl != null)
+                    {
+                        String imagePath = _webHostEnvironment.WebRootPath + product.ImageUrl;
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            System.IO.File.Delete(imagePath);
+                        }
+                    }
+
                     String fileName = Guid.NewGuid().ToString() + "_" + ProductImage.FileName;
                     String filePath = Path.Combine(uploadPath, fileName);
                     using (var fileStream = new FileStream(filePath, FileMode.Create))

@@ -14,6 +14,7 @@ namespace DataAccess.Repository
         {
             _db = db;
             _dbSet = _db.Set<T>();
+            _db.Product.Include(u => u.Category);
         }
 
 
@@ -22,15 +23,32 @@ namespace DataAccess.Repository
             _dbSet.Add(entity);
         }
 
-        public T? Get(Expression<Func<T, bool>> filter)
+        public T? Get(Expression<Func<T, bool>> filter, string? includeTables = null)
         {
             IQueryable<T> query = _dbSet;
+
+            if (!String.IsNullOrEmpty(includeTables))
+            {
+                foreach (var includeTable in includeTables.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeTable);
+                }
+            }
+
             return query.FirstOrDefault(filter);
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string? includeTables = null)
         {
-            return _dbSet.ToList();
+            IQueryable<T> query = _dbSet;
+            if (!String.IsNullOrEmpty(includeTables))
+            {
+                foreach (var includeTable in includeTables.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeTable);
+                }
+            }
+            return query.ToList();
         }
 
         public void Remove(T entity)

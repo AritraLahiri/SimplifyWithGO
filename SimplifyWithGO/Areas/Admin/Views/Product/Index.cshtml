@@ -11,7 +11,7 @@
 		<thead>
 			<tr>
 				<th scope="col">
-					
+
 				</th>
 				<th scope="col">
 					Name
@@ -36,7 +36,16 @@
 					<td class="w-auto">@item.Name</td>
 					<td class="w-auto">@item.Description</td>
 					<td class="w-auto">@item.Price</td>
-					<td class="w-auto">@item.Category</td>
+					@{
+						if ( item.Category != null)
+						{
+							<td class="w-auto">@item.Category.Name</td>
+						}
+						else
+						{
+						<td class="w-auto"></td>
+						}
+					}
 					<td class="w-auto">
 						<div class="d-flex">
 							<a asp-route-Id="@item.Id" class="btn  mx-2 btn-warning" asp-controller="Product" asp-action="Upsert">Edit</a>

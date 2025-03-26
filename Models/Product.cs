@@ -28,8 +28,8 @@ namespace Models
 
         public double PriceFor100 { get; set; }
 
-        public int CategoryID { get; set; }
         [ForeignKey("CategoryID")]
+        public int CategoryID { get; set; }
         public Category? Category { get; set; }
 
     }
