@@ -27,6 +27,9 @@ namespace SimplifyWithGO.Areas.Admin.Controllers
             List<Product> ProductList = _productRepository.GetAll(includeTable: "Category").ToList();
             return View(ProductList);
         }
+
+
+
         [HttpGet]
         public IActionResult Upsert(int? Id)
         {
@@ -119,5 +122,18 @@ namespace SimplifyWithGO.Areas.Admin.Controllers
             TempData["Error"] = "Product not valid";
             return View("Delete");
         }
+
+        #region Api Calls
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            return Json(new { data = _productRepository.GetAll(includeTable: "Category") });
+        }
+
+
+
+        #endregion
+
     }
 }
