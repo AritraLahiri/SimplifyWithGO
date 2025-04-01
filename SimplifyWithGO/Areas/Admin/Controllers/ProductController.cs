@@ -94,35 +94,6 @@ namespace SimplifyWithGO.Areas.Admin.Controllers
             return RedirectToAction("Upsert");
         }
 
-        [HttpGet]
-        public IActionResult Delete(int? Id)
-        {
-            if (Id == null || Id == 0)
-            {
-                return NotFound();
-            }
-            Product? product = _productRepository.Get(product => product.Id == Id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return View(product);
-        }
-
-        [HttpPost]
-        public IActionResult Delete(Product product)
-        {
-            if (ModelState.IsValid)
-            {
-                _productRepository.Remove(product);
-                _productRepository.SaveChanges();
-                TempData["Success"] = "Product Deleted Successfully";
-                return RedirectToAction("Index");
-            }
-            TempData["Error"] = "Product not valid";
-            return View("Delete");
-        }
-
         #region Api Calls
 
         [HttpGet]
@@ -131,6 +102,32 @@ namespace SimplifyWithGO.Areas.Admin.Controllers
             return Json(new { data = _productRepository.GetAll(includeTable: "Category") });
         }
 
+        [HttpDelete]
+        public IActionResult Delete(int? Id)
+        {
+            if (Id == null || Id == 0)
+            {
+                return Json(new { success = false, message = "Id not found for product" });
+            }
+            Product? product = _productRepository.Get(product => product.Id == Id);
+            if (product == null)
+            {
+                return Json(new { success = false, message = "Id not found for product" });
+
+            }
+            //Delete image as well
+            if (product.ImageUrl != null)
+            {
+                String imagePath = _webHostEnvironment.WebRootPath + product.ImageUrl;
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+            }
+            _productRepository.Remove(product);
+            _productRepository.SaveChanges();
+            return Json(new { success = true, message = "Product Deleted Successfully" });
+        }
 
 
         #endregion
