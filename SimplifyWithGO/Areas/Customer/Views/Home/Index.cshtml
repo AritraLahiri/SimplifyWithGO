@@ -14,8 +14,8 @@
 								@product.Name
 							</p>
 							<p class="card-footer h9 text-light-emphasis opacity-75 mt-2 text-uppercase text-center flex-grow-1"
-							   style="min-height: 50px;">
-								@product.Description
+							   style="min-height: 50px;text-align:center ">
+								 @Html.Raw(product.Description)
 							</p>
 							<p class="card-title h6 text-dark opacity-75 mt-2 text-center">
 								As low as <span class="h4 text-success fw-bold">@product.PriceFor100.ToString("c")</span>
@@ -24,7 +24,7 @@
 								Price: <span class="h4 text-success fw-bold">@product.ListPrice.ToString("c")</span>
 							</p>
 							<div class="mt-auto">
-								<a href="#" class="btn btn-secondary bg-gradient border-0 form-control">Details</a>
+								<a  asp-action="Details" asp-route-prodId="@product.Id"  class="btn btn-secondary bg-gradient border-0 form-control">Details</a>
 							</div>
 						</div>
 					</div>

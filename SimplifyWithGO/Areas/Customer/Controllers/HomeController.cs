@@ -24,6 +24,19 @@ namespace SimplifyWithGO.Areas.Customer.Controllers
             return View(products);
         }
 
+        [HttpGet]
+        public IActionResult Details(int ProdId)
+        {
+            Product? product = _productRepository.Get(p => p.Id == ProdId, includeTable: "Category");
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
+
+
         public IActionResult Privacy()
         {
             return View();
